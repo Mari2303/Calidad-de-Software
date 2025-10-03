@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="Model1TargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SchoolSet" EntityType="Model1.School" />
+          <EntitySet Name="TuitionSet" EntityType="Model1.Tuition" />
+          <EntitySet Name="StudentSet" EntityType="Model1.Student" />
+          <EntitySet Name="DegreeSet" EntityType="Model1.Degree" />
+          <EntitySet Name="HallsSet" EntityType="Model1.Halls" />
+          <EntitySet Name="CourseSet" EntityType="Model1.Course" />
+          <EntitySet Name="PeriodSet" EntityType="Model1.Period" />
+          <EntitySet Name="GradeSet" EntityType="Model1.Grade" />
+          <EntitySet Name="SubjectsSet" EntityType="Model1.Subjects" />
+          <AssociationSet Name="SchoolTuition" Association="Model1.SchoolTuition">
+            <End Role="School" EntitySet="SchoolSet" />
+            <End Role="Tuition" EntitySet="TuitionSet" />
+          </AssociationSet>
+          <AssociationSet Name="DegreeTuition" Association="Model1.DegreeTuition">
+            <End Role="Degree" EntitySet="DegreeSet" />
+            <End Role="Tuition" EntitySet="TuitionSet" />
+          </AssociationSet>
+          <AssociationSet Name="DegreeCurse" Association="Model1.DegreeCurse">
+            <End Role="Degree" EntitySet="DegreeSet" />
+            <End Role="Curse" EntitySet="CourseSet" />
+          </AssociationSet>
+          <EntitySet Name="CurseHallsSet" EntityType="Model1.CurseHalls" />
+          <AssociationSet Name="CurseCurseHalls" Association="Model1.CurseCurseHalls">
+            <End Role="Curse" EntitySet="CourseSet" />
+            <End Role="CurseHalls" EntitySet="CurseHallsSet" />
+          </AssociationSet>
+          <AssociationSet Name="HallsCurseHalls" Association="Model1.HallsCurseHalls">
+            <End Role="Halls" EntitySet="HallsSet" />
+            <End Role="CurseHalls" EntitySet="CurseHallsSet" />
+          </AssociationSet>
+          <AssociationSet Name="SchoolPeriod" Association="Model1.SchoolPeriod">
+            <End Role="School" EntitySet="SchoolSet" />
+            <End Role="Period" EntitySet="PeriodSet" />
+          </AssociationSet>
+          <AssociationSet Name="SubjectsGrade" Association="Model1.SubjectsGrade">
+            <End Role="Subjects" EntitySet="SubjectsSet" />
+            <End Role="Grade" EntitySet="GradeSet" />
+          </AssociationSet>
+          <AssociationSet Name="PeriodGrade" Association="Model1.PeriodGrade">
+            <End Role="Period" EntitySet="PeriodSet" />
+            <End Role="Grade" EntitySet="GradeSet" />
+          </AssociationSet>
+          <AssociationSet Name="DegreeSubjects" Association="Model1.DegreeSubjects">
+            <End Role="Degree" EntitySet="DegreeSet" />
+            <End Role="Subjects" EntitySet="SubjectsSet" />
+          </AssociationSet>
+          <AssociationSet Name="StudentTuition" Association="Model1.StudentTuition">
+            <End Role="Student" EntitySet="StudentSet" />
+            <End Role="Tuition" EntitySet="TuitionSet" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Tuition" Relationship="Model1.SchoolTuition" FromRole="School" ToRole="Tuition" />
+          <NavigationProperty Name="Period" Relationship="Model1.SchoolPeriod" FromRole="School" ToRole="Period" />
+          <Property Name="NameSchool" Type="String" Nullable="false" />
+          <Property Name="CodeDane" Type="String" Nullable="false" />
+          <Property Name="EmailInstitution" Type="String" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" />
+          <Property Name="States" Type="String" Nullable="false" />
+          <Property Name="CreatedAt" Type="String" Nullable="false" />
+          <Property Name="DeletedAt" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tuition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="School" Relationship="Model1.SchoolTuition" FromRole="Tuition" ToRole="School" />
+          <NavigationProperty Name="Degree" Relationship="Model1.DegreeTuition" FromRole="Tuition" ToRole="Degree" />
+          <Property Name="DegreeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Student" Relationship="Model1.StudentTuition" FromRole="Tuition" ToRole="Student" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedAt" Type="String" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <Property Name="DeletedAt" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Tuition" Relationship="Model1.StudentTuition" FromRole="Student" ToRole="Tuition" />
+          <Property Name="FirstName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <Property Name="Gender" Type="String" Nullable="false" />
+          <Property Name="DocumentNumber" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="Phone" Type="String" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <Property Name="CreatedAt" Type="String" Nullable="false" />
+          <Property Name="DeletedAt" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Degree">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Tuition" Relationship="Model1.DegreeTuition" FromRole="Degree" ToRole="Tuition" />
+          <NavigationProperty Name="Curse" Relationship="Model1.DegreeCurse" FromRole="Degree" ToRole="Curse" />
+          <Property Name="SubjectsId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Subjects" Relationship="Model1.DegreeSubjects" FromRole="Degree" ToRole="Subjects" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <Property Name="CreatedAt" Type="String" Nullable="false" />
+          <Property Name="DeletedAt" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Halls">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="CurseHalls" Relationship="Model1.HallsCurseHalls" FromRole="Halls" ToRole="CurseHalls" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Capacity" Type="String" Nullable="false" />
+          <Property Name="CreatedAt" Type="String" Nullable="false" />
+          <Property Name="DeletedAt" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Degree" Relationship="Model1.DegreeCurse" FromRole="Curse" ToRole="Degree" />
+          <Property Name="DegreeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CurseHalls" Relationship="Model1.CurseCurseHalls" FromRole="Curse" ToRole="CurseHalls" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <Property Name="CreatedAt" Type="String" Nullable="false" />
+          <Property Name="DeletedAt" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Period">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="School" Relationship="Model1.SchoolPeriod" FromRole="Period" ToRole="School" />
+          <Property Name="SchoolId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Grade" Relationship="Model1.PeriodGrade" FromRole="Period" ToRole="Grade" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="StartDate" Type="String" Nullable="false" />
+          <Property Name="EndDate" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Grade">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Subjects" Relationship="Model1.SubjectsGrade" FromRole="Grade" ToRole="Subjects" />
+          <NavigationProperty Name="Period" Relationship="Model1.PeriodGrade" FromRole="Grade" ToRole="Period" />
+          <Property Name="PeriodId" Type="Int32" Nullable="false" />
+          <Property Name="Score" Type="String" Nullable="false" />
+          <Property Name="Comments" Type="String" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <Property Name="CreatedAt" Type="String" Nullable="false" />
+          <Property Name="DeletedAt" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Grade" Relationship="Model1.SubjectsGrade" FromRole="Subjects" ToRole="Grade" />
+          <NavigationProperty Name="Degree" Relationship="Model1.DegreeSubjects" FromRole="Subjects" ToRole="Degree" />
+          <Property Name="DegreeId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <Property Name="CreatedAt" Type="String" Nullable="false" />
+          <Property Name="DeletedAt" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="SchoolTuition">
+          <End Type="Model1.School" Role="School" Multiplicity="1" />
+          <End Type="Model1.Tuition" Role="Tuition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="School">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tuition">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DegreeTuition">
+          <End Type="Model1.Degree" Role="Degree" Multiplicity="1" />
+          <End Type="Model1.Tuition" Role="Tuition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Degree">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tuition">
+              <PropertyRef Name="DegreeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DegreeCurse">
+          <End Type="Model1.Degree" Role="Degree" Multiplicity="1" />
+          <End Type="Model1.Course" Role="Curse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Degree">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Curse">
+              <PropertyRef Name="DegreeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CurseHalls">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Curse" Relationship="Model1.CurseCurseHalls" FromRole="CurseHalls" ToRole="Curse" />
+          <Property Name="CurseId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Halls" Relationship="Model1.HallsCurseHalls" FromRole="CurseHalls" ToRole="Halls" />
+          <Property Name="HallsId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="CurseCurseHalls">
+          <End Type="Model1.Course" Role="Curse" Multiplicity="1" />
+          <End Type="Model1.CurseHalls" Role="CurseHalls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CurseHalls">
+              <PropertyRef Name="CurseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="HallsCurseHalls">
+          <End Type="Model1.Halls" Role="Halls" Multiplicity="1" />
+          <End Type="Model1.CurseHalls" Role="CurseHalls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Halls">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CurseHalls">
+              <PropertyRef Name="HallsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SchoolPeriod">
+          <End Type="Model1.School" Role="School" Multiplicity="1" />
+          <End Type="Model1.Period" Role="Period" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="School">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Period">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SubjectsGrade">
+          <End Type="Model1.Subjects" Role="Subjects" Multiplicity="1" />
+          <End Type="Model1.Grade" Role="Grade" Multiplicity="*" />
+        </Association>
+        <Association Name="PeriodGrade">
+          <End Type="Model1.Period" Role="Period" Multiplicity="1" />
+          <End Type="Model1.Grade" Role="Grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Period">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grade">
+              <PropertyRef Name="PeriodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DegreeSubjects">
+          <End Type="Model1.Degree" Role="Degree" Multiplicity="1" />
+          <End Type="Model1.Subjects" Role="Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Degree">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="DegreeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StudentTuition">
+          <End Type="Model1.Student" Role="Student" Multiplicity="1" />
+          <End Type="Model1.Tuition" Role="Tuition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tuition">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="Model1" />
+        <Alias Key="Target" Value="Model1.Store" />
+        <EntityContainerMapping CdmEntityContainer="Model1Container" StorageEntityContainer="Model1TargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
